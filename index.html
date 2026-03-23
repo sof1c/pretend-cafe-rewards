@@ -1,104 +1,48 @@
-const form = document.getElementById("rewardsForm");
-const phoneInput = document.getElementById("phone");
-const message = document.getElementById("message");
-const barcodeSection = document.getElementById("barcodeSection");
-const memberIdText = document.getElementById("memberIdText");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frictionless Cafe Rewards</title>
+  <link rel="stylesheet" href="style.css?v=11" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Frictionless Cafe Logo" class="logo" width="48" height="48" />
 
-// Format phone while typing
-phoneInput.addEventListener("input", () => {
-  let value = phoneInput.value.replace(/\D/g, "");
+    <h1>Frictionless Cafe Rewards</h1>
+    <p>No app. No hassle. Just rewards.</p>
 
-  if (value.length > 10) {
-    value = value.slice(0, 10);
-  }
+    <div class="card">
+      <h2>Join Our Rewards Program</h2>
+      <p>Enter your 10-digit phone number below.</p>
 
-  if (value.length > 6) {
-    phoneInput.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
-  } else if (value.length > 3) {
-    phoneInput.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-  } else if (value.length > 0) {
-    phoneInput.value = `(${value}`;
-  } else {
-    phoneInput.value = "";
-  }
-});
+      <form id="rewardsForm">
+        <input
+          type="tel"
+          id="phone"
+          placeholder="(555) 555-5555"
+          maxlength="14"
+          required
+        />
+        <button type="submit">Join Rewards</button>
+      </form>
 
-// Create a stable member ID from the phone number
-function generateMemberId(phone) {
-  return `FC-${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6)}`;
-}
+      <div id="message"></div>
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+      <div id="barcodeSection" class="barcode-section hidden">
+        <p class="barcode-label">Show this barcode to your barista</p>
+        <p id="memberIdText" class="member-id-text"></p>
+        <svg id="memberBarcode"></svg>
+      </div>
+    </div>
 
-  const cleanedPhone = phoneInput.value.replace(/\D/g, "");
+    <p class="staff-link">
+      <a href="barista.html">Open Barista Check-In Screen</a>
+    </p>
+  </div>
 
-  if (!/^\d{10}$/.test(cleanedPhone)) {
-    message.innerHTML = "Please enter a valid 10-digit phone number.";
-    message.style.color = "red";
-    barcodeSection.classList.add("hidden");
-    return;
-  }
-
-  const storageKey = "frictionlessCafeMembers";
-  const members = JSON.parse(localStorage.getItem(storageKey)) || {};
-
-  if (!members[cleanedPhone]) {
-    members[cleanedPhone] = {
-      memberId: generateMemberId(cleanedPhone),
-      visits: 0
-    };
-  }
-
-  const memberId = members[cleanedPhone].memberId;
-  const visits = members[cleanedPhone].visits || 0;
-  const goal = 10;
-  const remaining = Math.max(goal - visits, 0);
-
-  localStorage.setItem(storageKey, JSON.stringify(members));
-
-  message.style.color = "";
-
-  if (visits >= goal) {
-    message.innerHTML = `
-      <span style="color: green; font-weight: bold;">
-        🎉 You’ve unlocked a free drink!
-      </span>
-      <br><br>
-      <strong>Member ID:</strong> ${memberId}
-      <br>
-      <strong>Rewards Progress:</strong> ${visits}/${goal}
-      <br><br>
-      📱 A reward code has been sent to your phone number.
-      <br>
-      Please check your text messages and show it to your barista to redeem.
-    `;
-  } else {
-    message.innerHTML = `
-      <span style="color: green; font-weight: bold;">
-        Success! You’ve joined Frictionless Cafe Rewards.
-      </span>
-      <br><br>
-      <strong>Member ID:</strong> ${memberId}
-      <br>
-      <strong>Rewards Progress:</strong> ${visits}/${goal}
-      <br>
-      ☕ Keep checking in to earn free rewards.
-      <br>
-      ${remaining} more visit${remaining === 1 ? "" : "s"} until your free drink.
-    `;
-  }
-
-  memberIdText.textContent = `Member ID: ${memberId}`;
-  barcodeSection.classList.remove("hidden");
-
-  JsBarcode("#memberBarcode", memberId, {
-    format: "CODE128",
-    displayValue: false,
-    width: 2,
-    height: 80,
-    margin: 10
-  });
-
-  form.reset();
-});
+  <script src="script.js?v=11"></script>
+</body>
+</html>
