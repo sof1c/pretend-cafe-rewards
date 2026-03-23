@@ -37,6 +37,7 @@ form.addEventListener("submit", (e) => {
 
   const visits = data[num].visits;
   const id = data[num].id;
+  const visitsLeft = 10 - visits;
 
   const greeting = isNewUser
     ? "Welcome to Frictionless Cafe Rewards."
@@ -55,7 +56,7 @@ form.addEventListener("submit", (e) => {
     output.innerHTML = `
       <b>${greeting}</b><br><br>
       Member ID: ${id}<br>
-      ${visits}/10 drinks away from your next reward!<br><br>
+      ${visitsLeft} visit${visitsLeft === 1 ? "" : "s"} until your next reward!<br><br>
       📱 Show this barcode to your barista to earn your points.
     `;
   }
