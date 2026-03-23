@@ -28,13 +28,24 @@ form.addEventListener("submit", (event) => {
   const cleanedPhone = phoneInput.value.replace(/\D/g, "");
 
   if (!/^\d{10}$/.test(cleanedPhone)) {
-    message.textContent = "Please enter a valid 10-digit phone number.";
+    message.innerHTML = "Please enter a valid 10-digit phone number.";
     message.style.color = "red";
     return;
   }
 
-  message.textContent = "Success! You’ve joined Frictionless Cafe Rewards.";
-  message.style.color = "green";
+  // Fake rewards progress (always starts at 1 for simulation)
+  const visits = 1;
+  const goal = 10;
+
+  message.innerHTML = `
+    <span style="color: green; font-weight: bold;">
+      Success! You’ve joined Frictionless Café Rewards.
+    </span>
+    <br><br>
+    ☕ Keep checking in to earn free drinks!
+    <br>
+    ⭐ You are <strong>${visits}/${goal}</strong> of the way to a free drink.
+  `;
 
   form.reset();
 });
