@@ -12,10 +12,8 @@ function getMemberId(num) {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // Clean phone number (only digits)
   const num = phone.value.replace(/\D/g, "");
 
-  // Validate
   if (num.length !== 10) {
     output.innerHTML = "Please enter a valid 10-digit phone number.";
     output.style.color = "red";
@@ -23,41 +21,41 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  // Get saved data
   let data = JSON.parse(localStorage.getItem("users")) || {};
 
-  // Create or update user
+  let isNewUser = false;
+
   if (!data[num]) {
     data[num] = {
       id: getMemberId(num),
       visits: 1
     };
+    isNewUser = true;
   } else {
     data[num].visits += 1;
   }
 
-  // Save data
   localStorage.setItem("users", JSON.stringify(data));
 
   const visits = data[num].visits;
   const id = data[num].id;
   const goal = 10;
 
-  // Greeting
-  const greeting =
-    visits === 1
-      ? "Welcome to Frictionless Cafe Rewards."
-      : "Welcome back to Frictionless Cafe Rewards.";
+  // Greeting logic
+  let greeting = isNewUser
+    ? "Welcome to Frictionless Cafe Rewards."
+    : "Welcome back to Frictionless Cafe Rewards.";
 
-  // Display message
+  // Main message
   output.style.color = "";
   output.innerHTML = `
     <b>${greeting}</b><br><br>
     Member ID: ${id}<br>
-    ${visits}/10 drinks away from your next reward!
+    ${visits}/10 drinks away from your next reward!<br><br>
+    📱 Show this barcode to your barista to earn your points.
   `;
 
-  // Reward unlock
+  // Reward unlocked
   if (visits >= goal) {
     output.innerHTML += `
       <br><br>
@@ -78,6 +76,5 @@ form.addEventListener("submit", (e) => {
     margin: 10
   });
 
-  // Reset input
   phone.value = "";
 });
