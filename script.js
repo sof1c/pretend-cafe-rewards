@@ -21,6 +21,12 @@ phoneInput.addEventListener("input", () => {
   }
 });
 
+// Generate fake code (not shown, just simulated)
+function generateRewardCode() {
+  const randomDigits = Math.floor(1000 + Math.random() * 9000);
+  return `CAFE-${randomDigits}`;
+}
+
 // Submit handler
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -38,7 +44,8 @@ form.addEventListener("submit", (event) => {
 
   if (!rewardsData[cleanedPhone]) {
     rewardsData[cleanedPhone] = {
-      visits: 0
+      visits: 0,
+      rewardCode: null
     };
   }
 
@@ -48,17 +55,22 @@ form.addEventListener("submit", (event) => {
   const goal = 10;
   const remaining = goal - visits;
 
+  // On 10th visit, generate code (hidden)
+  if (visits >= goal && !rewardsData[cleanedPhone].rewardCode) {
+    rewardsData[cleanedPhone].rewardCode = generateRewardCode();
+  }
+
   localStorage.setItem(storageKey, JSON.stringify(rewardsData));
 
   if (visits >= goal) {
     message.innerHTML = `
       <span style="color: green; font-weight: bold;">
-        Success! You’ve joined Frictionless Café Rewards.
+        🎉 You’ve unlocked a free drink!
       </span>
       <br><br>
-      🎉 Congratulations! You’ve reached <strong>${visits}/${goal}</strong>.
+      📱 A reward code has been sent to your phone number.
       <br>
-      🥤 Your free drink reward is ready!
+      Please check your text messages and show it to your barista to redeem.
     `;
   } else {
     message.innerHTML = `
