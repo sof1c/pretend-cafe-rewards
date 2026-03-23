@@ -4,7 +4,10 @@ const message = document.getElementById("message");
 const barcodeSection = document.getElementById("barcodeSection");
 const memberIdText = document.getElementById("memberIdText");
 
-// Format phone while typing
+function generateMemberId(phone) {
+  return `FC-${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6)}`;
+}
+
 phoneInput.addEventListener("input", () => {
   let value = phoneInput.value.replace(/\D/g, "");
 
@@ -22,11 +25,6 @@ phoneInput.addEventListener("input", () => {
     phoneInput.value = "";
   }
 });
-
-// Create a stable member ID from the phone number
-function generateMemberId(phone) {
-  return `FC-${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6)}`;
-}
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -56,8 +54,6 @@ form.addEventListener("submit", (event) => {
   const remaining = Math.max(goal - visits, 0);
 
   localStorage.setItem(storageKey, JSON.stringify(members));
-
-  message.style.color = "";
 
   if (visits >= goal) {
     message.innerHTML = `
@@ -89,6 +85,7 @@ form.addEventListener("submit", (event) => {
     `;
   }
 
+  message.style.color = "";
   memberIdText.textContent = `Member ID: ${memberId}`;
   barcodeSection.classList.remove("hidden");
 
