@@ -1,137 +1,49 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f7f1ea;
-  color: #3b2f2f;
-}
-
-.container {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
+  font-family: Arial;
+  background: #f7f1ea;
   text-align: center;
 }
 
-.logo {
-  width: 48px !important;
-  height: 48px !important;
-  max-width: 48px !important;
-  max-height: 48px !important;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 8px;
+.container {
+  max-width: 500px;
+  margin: 50px auto;
 }
 
-h1 {
-  font-size: 2.3rem;
-  margin-top: 5px;
+.logo {
+  width: 50px;
   margin-bottom: 10px;
 }
 
 .card {
   background: white;
-  padding: 30px;
-  margin-top: 30px;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  padding: 25px;
+  border-radius: 12px;
 }
 
 input {
-  width: 100%;
-  max-width: 350px;
-  padding: 12px;
-  font-size: 16px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
+  padding: 10px;
+  width: 80%;
+  margin-top: 10px;
 }
 
 button {
-  padding: 12px 22px;
-  font-size: 16px;
-  border: none;
-  background-color: #8b4513;
+  padding: 10px;
+  background: #8b4513;
   color: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-#message {
-  margin-top: 18px;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.barcode-section {
-  margin-top: 25px;
-  padding: 20px;
-  border: 1px solid #e4d7c8;
-  border-radius: 12px;
-  background-color: #fcf8f3;
-}
-
-.hidden {
-  display: none;
-}
-
-.barcode-label {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.member-id-text {
-  margin-bottom: 12px;
-  color: #8b4513;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-#memberBarcode {
-  max-width: 100%;
-  height: auto;
-}
-
-.staff-link {
-  margin-top: 20px;
-}
-
-.staff-link a {
-  color: #8b4513;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.staff-link a:hover {
-  text-decoration: underline;
-}
-
-.qr-link {
-  display: inline-block;
+  border: none;
   margin-top: 10px;
 }
 
 .qr-image {
-  width: 220px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  transition: transform 0.2s ease;
+  width: 200px;
   cursor: pointer;
 }
 
-.qr-image:hover {
-  transform: scale(1.03);
+.qr-text {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
-.qr-text {
-  margin-top: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  color: #8b4513;
+.hidden {
+  display: none;
 }
