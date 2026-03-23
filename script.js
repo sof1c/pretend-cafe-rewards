@@ -21,7 +21,6 @@ form.addEventListener("submit", (e) => {
   }
 
   let data = JSON.parse(localStorage.getItem("users")) || {};
-
   let isNewUser = false;
 
   if (!data[num]) {
@@ -38,7 +37,6 @@ form.addEventListener("submit", (e) => {
 
   const visits = data[num].visits;
   const id = data[num].id;
-  const goal = 10;
 
   const greeting = isNewUser
     ? "Welcome to Frictionless Cafe Rewards."
@@ -46,12 +44,12 @@ form.addEventListener("submit", (e) => {
 
   output.style.color = "";
 
-  if (visits >= goal) {
+  if (visits >= 10) {
     output.innerHTML = `
       <b>${greeting}</b><br><br>
       Member ID: ${id}<br><br>
-      🎉 Congrats! We’ve texted you your free reward.<br>
-      Show this barcode to your barista to keep earning points.
+      🎉 Congrats! We’ve texted you your free reward.<br><br>
+      📱 Show this barcode to your barista to keep earning points.
     `;
   } else {
     output.innerHTML = `
