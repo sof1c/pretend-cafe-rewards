@@ -11,10 +11,12 @@ function getMemberId(num) {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  let num = phone.value.replace(/\D/g, "");
+  const num = phone.value.replace(/\D/g, "");
 
   if (num.length !== 10) {
-    output.innerHTML = "Enter a valid 10-digit number";
+    output.innerHTML = "Please enter a valid 10-digit phone number.";
+    output.style.color = "red";
+    barcodeBox.classList.add("hidden");
     return;
   }
 
@@ -25,20 +27,24 @@ form.addEventListener("submit", (e) => {
       id: getMemberId(num),
       visits: 1
     };
+  } else {
+    data[num].visits += 1;
   }
 
-  let visits = data[num].visits;
-  let id = data[num].id;
+  const visits = data[num].visits;
+  const id = data[num].id;
 
-  let greeting =
+  const greeting =
     visits === 1
       ? "Welcome to Frictionless Cafe Rewards."
       : "Welcome back to Frictionless Cafe Rewards.";
 
+  output.style.color = "";
+
   output.innerHTML = `
     <b>${greeting}</b><br><br>
     Member ID: ${id}<br>
-    Visits: ${visits}/10
+    ${visits}/10 drinks away from your next reward!
   `;
 
   if (visits >= 10) {
@@ -54,7 +60,13 @@ form.addEventListener("submit", (e) => {
   memberIdText.innerText = id;
   barcodeBox.classList.remove("hidden");
 
-  JsBarcode("#barcode", id);
+  JsBarcode("#barcode", id, {
+    format: "CODE128",
+    displayValue: false,
+    width: 2,
+    height: 80,
+    margin: 10
+  });
 
   phone.value = "";
 });
