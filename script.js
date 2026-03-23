@@ -1,77 +1,35 @@
-const form = document.getElementById("form");
-const phone = document.getElementById("phone");
-const output = document.getElementById("output");
-const memberIdText = document.getElementById("memberId");
-const barcodeBox = document.getElementById("barcodeBox");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rewards</title>
+  <link rel="stylesheet" href="style.css?v=30" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" class="logo" />
 
-function getMemberId(num) {
-  return "FC-" + num;
-}
+    <h1>Frictionless Cafe Rewards</h1>
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+    <div class="card">
+      <form id="form">
+        <input id="phone" placeholder="(555) 555-5555" required />
+        <button type="submit">Check In</button>
+      </form>
 
-  const num = phone.value.replace(/\D/g, "");
+      <div id="output"></div>
 
-  if (num.length !== 10) {
-    output.innerHTML = "Please enter a valid 10-digit phone number.";
-    output.style.color = "red";
-    barcodeBox.classList.add("hidden");
-    return;
-  }
+      <div id="barcodeBox" class="hidden">
+        <p><strong>Your Member ID</strong></p>
+        <p id="memberId"></p>
+        <p>Show this barcode to your barista to earn your points.</p>
+        <svg id="barcode"></svg>
+      </div>
+    </div>
+  </div>
 
-  const goal = 10;
-  let data = JSON.parse(localStorage.getItem("users")) || {};
-  let isNewUser = false;
-
-  if (!data[num]) {
-    data[num] = {
-      id: getMemberId(num),
-      visits: 1
-    };
-    isNewUser = true;
-  } else {
-    data[num].visits += 1;
-  }
-
-  localStorage.setItem("users", JSON.stringify(data));
-
-  const visits = data[num].visits;
-  const id = data[num].id;
-  const visitsLeft = Math.max(goal - visits, 0);
-
-  const greeting = isNewUser
-    ? "Welcome to Frictionless Cafe Rewards."
-    : "Welcome back to Frictionless Cafe Rewards.";
-
-  output.style.color = "";
-
-  if (visits >= goal) {
-    output.innerHTML = `
-      <b>${greeting}</b><br><br>
-      Member ID: ${id}<br><br>
-      🎉 Congrats! We’ve texted you your free reward.<br><br>
-      📱 Show this barcode to your barista to keep earning points.
-    `;
-  } else {
-    output.innerHTML = `
-      <b>${greeting}</b><br><br>
-      Member ID: ${id}<br>
-      ${visitsLeft} visit${visitsLeft === 1 ? "" : "s"} until your next reward!<br><br>
-      📱 Show this barcode to your barista to earn your points.
-    `;
-  }
-
-  memberIdText.innerText = id;
-  barcodeBox.classList.remove("hidden");
-
-  JsBarcode("#barcode", id, {
-    format: "CODE128",
-    displayValue: false,
-    width: 2,
-    height: 80,
-    margin: 10
-  });
-
-  phone.value = "";
-});
+  <script src="script.js?v=30"></script>
+</body>
+</html>
