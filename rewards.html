@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rewards</title>
-  <link rel="stylesheet" href="style.css?v=21" />
+  <link rel="stylesheet" href="style.css?v=30" />
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
@@ -16,7 +16,7 @@
     <div class="card">
       <form id="form">
         <input id="phone" placeholder="(555) 555-5555" required />
-        <button type="submit">Join Rewards</button>
+        <button type="submit">Check In</button>
       </form>
 
       <div id="output"></div>
@@ -24,11 +24,12 @@
       <div id="barcodeBox" class="hidden">
         <p><strong>Your Member ID</strong></p>
         <p id="memberId"></p>
+        <p>Show this barcode to your barista to earn your points.</p>
         <svg id="barcode"></svg>
       </div>
     </div>
   </div>
 
-<script src="script.js?v=25"></script>
+  <script src="script.js?v=30"></script>
 </body>
 </html>
