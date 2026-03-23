@@ -33,19 +33,46 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  // Fake rewards progress (always starts at 1 for simulation)
-  const visits = 1;
-  const goal = 10;
+  const storageKey = "frictionlessCafeRewards";
+  const rewardsData = JSON.parse(localStorage.getItem(storageKey)) || {};
 
-  message.innerHTML = `
-    <span style="color: green; font-weight: bold;">
-      Success! You’ve joined Frictionless Café Rewards.
-    </span>
-    <br><br>
-    ☕ Keep checking in to earn free drinks!
-    <br>
-    ⭐ You are <strong>${visits}/${goal}</strong> of the way to a free drink.
-  `;
+  if (!rewardsData[cleanedPhone]) {
+    rewardsData[cleanedPhone] = {
+      visits: 0
+    };
+  }
+
+  rewardsData[cleanedPhone].visits += 1;
+
+  const visits = rewardsData[cleanedPhone].visits;
+  const goal = 10;
+  const remaining = goal - visits;
+
+  localStorage.setItem(storageKey, JSON.stringify(rewardsData));
+
+  if (visits >= goal) {
+    message.innerHTML = `
+      <span style="color: green; font-weight: bold;">
+        Success! You’ve joined Frictionless Café Rewards.
+      </span>
+      <br><br>
+      🎉 Congratulations! You’ve reached <strong>${visits}/${goal}</strong>.
+      <br>
+      🥤 Your free drink reward is ready!
+    `;
+  } else {
+    message.innerHTML = `
+      <span style="color: green; font-weight: bold;">
+        Success! You’ve joined Frictionless Café Rewards.
+      </span>
+      <br><br>
+      ☕ Keep checking in to earn free rewards!
+      <br>
+      ⭐ You are <strong>${visits}/${goal}</strong> of the way to a free drink.
+      <br>
+      ${remaining} more visit${remaining === 1 ? "" : "s"} until your free drink.
+    `;
+  }
 
   form.reset();
 });
