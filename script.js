@@ -4,7 +4,6 @@ const output = document.getElementById("output");
 const memberIdText = document.getElementById("memberId");
 const barcodeBox = document.getElementById("barcodeBox");
 
-// Create member ID
 function getMemberId(num) {
   return "FC-" + num;
 }
@@ -41,30 +40,28 @@ form.addEventListener("submit", (e) => {
   const id = data[num].id;
   const goal = 10;
 
-  // Greeting logic
-  let greeting = isNewUser
+  const greeting = isNewUser
     ? "Welcome to Frictionless Cafe Rewards."
     : "Welcome back to Frictionless Cafe Rewards.";
 
-  // Main message
   output.style.color = "";
-  output.innerHTML = `
-    <b>${greeting}</b><br><br>
-    Member ID: ${id}<br>
-    ${visits}/10 drinks away from your next reward!<br><br>
-    📱 Show this barcode to your barista to earn your points.
-  `;
 
-  // Reward unlocked
   if (visits >= goal) {
-    output.innerHTML += `
-      <br><br>
-      🎉 Free drink unlocked!<br>
-      📱 Check your texts to redeem.
+    output.innerHTML = `
+      <b>${greeting}</b><br><br>
+      Member ID: ${id}<br><br>
+      🎉 Congrats! We’ve texted you your free reward.<br>
+      Show this barcode to your barista to keep earning points.
+    `;
+  } else {
+    output.innerHTML = `
+      <b>${greeting}</b><br><br>
+      Member ID: ${id}<br>
+      ${visits}/10 drinks away from your next reward!<br><br>
+      📱 Show this barcode to your barista to earn your points.
     `;
   }
 
-  // Show barcode
   memberIdText.innerText = id;
   barcodeBox.classList.remove("hidden");
 
