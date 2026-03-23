@@ -2,6 +2,7 @@ const form = document.getElementById("rewardsForm");
 const phoneInput = document.getElementById("phone");
 const message = document.getElementById("message");
 
+// Format phone while typing
 phoneInput.addEventListener("input", () => {
   let value = phoneInput.value.replace(/\D/g, "");
 
@@ -20,6 +21,7 @@ phoneInput.addEventListener("input", () => {
   }
 });
 
+// Submit handler
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -31,7 +33,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  message.textContent = "Success! You’ve joined Frictionless Café Rewards.";
+  message.textContent = "Success! You’ve joined Frictionless Cafe Rewards.";
   message.style.color = "green";
 
   form.reset();
