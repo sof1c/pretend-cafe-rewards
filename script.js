@@ -44,27 +44,36 @@ form.addEventListener("submit", (event) => {
   if (!members[cleanedPhone]) {
     members[cleanedPhone] = {
       memberId: generateMemberId(cleanedPhone),
-      visits: 0
+      visits: 1
     };
   }
 
   const memberId = members[cleanedPhone].memberId;
-  const visits = members[cleanedPhone].visits || 0;
+  const visits = members[cleanedPhone].visits || 1;
   const goal = 10;
   const remaining = Math.max(goal - visits, 0);
 
   localStorage.setItem(storageKey, JSON.stringify(members));
 
+  let greeting;
+  if (visits === 1) {
+    greeting = "Welcome to Frictionless Cafe Rewards.";
+  } else {
+    greeting = "Welcome back to Frictionless Cafe Rewards.";
+  }
+
   if (visits >= goal) {
     message.innerHTML = `
       <span style="color: green; font-weight: bold;">
-        🎉 You’ve unlocked a free drink!
+        ${greeting}
       </span>
       <br><br>
       <strong>Member ID:</strong> ${memberId}
       <br>
       <strong>Rewards Progress:</strong> ${visits}/${goal}
       <br><br>
+      🎉 You’ve unlocked a free drink!
+      <br>
       📱 A reward code has been sent to your phone number.
       <br>
       Please check your text messages and show it to your barista to redeem.
@@ -72,7 +81,7 @@ form.addEventListener("submit", (event) => {
   } else {
     message.innerHTML = `
       <span style="color: green; font-weight: bold;">
-        Success! You’ve joined Frictionless Cafe Rewards.
+        ${greeting}
       </span>
       <br><br>
       <strong>Member ID:</strong> ${memberId}
