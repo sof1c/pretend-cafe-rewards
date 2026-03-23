@@ -32,10 +32,11 @@ form.addEventListener("submit", (e) => {
     isNewUser = true;
   }
 
+  // Add visit
   data[num].visits += 1;
 
+  let visits = data[num].visits;
   const id = data[num].id;
-  const currentVisit = data[num].visits;
 
   const greeting = isNewUser
     ? "Welcome to Frictionless Cafe Rewards."
@@ -43,16 +44,20 @@ form.addEventListener("submit", (e) => {
 
   output.style.color = "";
 
-  if (currentVisit === goal) {
+  // 🎉 EXACTLY 10 → reward
+  if (visits === goal) {
     output.innerHTML = `
       <b>${greeting}</b><br><br>
       Member ID: ${id}<br><br>
       🎉 Congrats! We’ve texted you your free reward.
     `;
 
+    // 🔁 reset AFTER showing reward
     data[num].visits = 0;
+
   } else {
-    const visitsLeft = goal - currentVisit;
+    // 🛑 never allow negatives
+    const visitsLeft = Math.max(goal - visits, 0);
 
     output.innerHTML = `
       <b>${greeting}</b><br><br>
@@ -61,6 +66,7 @@ form.addEventListener("submit", (e) => {
     `;
   }
 
+  // Save AFTER logic
   localStorage.setItem("users", JSON.stringify(data));
 
   memberIdText.innerText = id;
