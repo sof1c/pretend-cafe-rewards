@@ -96,3 +96,42 @@ button:hover {
   max-width: 100%;
   height: auto;
 }
+
+.staff-link {
+  margin-top: 20px;
+}
+
+.staff-link a {
+  color: #8b4513;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.staff-link a:hover {
+  text-decoration: underline;
+}
+
+.qr-link {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.qr-image {
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.qr-image:hover {
+  transform: scale(1.03);
+}
+
+.qr-text {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #8b4513;
+}
