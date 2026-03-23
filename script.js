@@ -20,6 +20,7 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
+  const goal = 10;
   let data = JSON.parse(localStorage.getItem("users")) || {};
   let isNewUser = false;
 
@@ -37,7 +38,7 @@ form.addEventListener("submit", (e) => {
 
   const visits = data[num].visits;
   const id = data[num].id;
-  const visitsLeft = 10 - visits;
+  const visitsLeft = Math.max(goal - visits, 0);
 
   const greeting = isNewUser
     ? "Welcome to Frictionless Cafe Rewards."
@@ -45,7 +46,7 @@ form.addEventListener("submit", (e) => {
 
   output.style.color = "";
 
-  if (visits >= 10) {
+  if (visits >= goal) {
     output.innerHTML = `
       <b>${greeting}</b><br><br>
       Member ID: ${id}<br><br>
