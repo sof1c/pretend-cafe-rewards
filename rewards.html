@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frictionless Cafe Rewards</title>
+  <link rel="stylesheet" href="style.css?v=12" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Frictionless Cafe Logo" class="logo" width="48" height="48" />
+
+    <h1>Frictionless Cafe Rewards</h1>
+    <p>No app. No hassle. Just rewards.</p>
+
+    <div class="card">
+      <h2>Join Our Rewards Program</h2>
+      <p>Enter your 10-digit phone number below.</p>
+
+      <form id="rewardsForm">
+        <input
+          type="tel"
+          id="phone"
+          placeholder="(555) 555-5555"
+          maxlength="14"
+          required
+        />
+        <button type="submit">Join Rewards</button>
+      </form>
+
+      <div id="message"></div>
+
+      <div id="barcodeSection" class="barcode-section hidden">
+        <p class="barcode-label">Show this barcode to your barista</p>
+        <p id="memberIdText" class="member-id-text"></p>
+        <svg id="memberBarcode"></svg>
+      </div>
+    </div>
+
+    <p class="staff-link">
+      <a href="barista.html">Open Barista Check-In Screen</a>
+    </p>
+  </div>
+
+  <script src="script.js?v=12"></script>
+</body>
+</html>
