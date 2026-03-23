@@ -4,17 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frictionless Cafe Rewards</title>
-
-  <!-- cache-busted CSS -->
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=8" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
   <div class="container">
-
-    <!-- LOGO (FORCED SMALL) -->
-    <img 
-      src="logo.png" 
-      alt="Frictionless Cafe Logo" 
+    <img
+      src="logo.png"
+      alt="Frictionless Cafe Logo"
       class="logo"
       width="48"
       height="48"
@@ -38,10 +35,16 @@
         <button type="submit">Join Rewards</button>
       </form>
 
-      <p id="message"></p>
+      <div id="message"></div>
+
+      <div id="barcodeSection" class="barcode-section hidden">
+        <p class="barcode-label">Show this barcode to your barista</p>
+        <p id="memberIdText" class="member-id-text"></p>
+        <svg id="memberBarcode"></svg>
+      </div>
     </div>
   </div>
 
-<script src="script.js?v=5"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
