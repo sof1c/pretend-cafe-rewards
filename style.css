@@ -7,21 +7,25 @@ body {
 
 .container {
   max-width: 700px;
-  margin: 60px auto;
+  margin: 50px auto;
   padding: 20px;
   text-align: center;
 }
 
+/* LOGO FIX (THIS IS THE IMPORTANT PART) */
 .logo {
-  width: 60px !important;
-  height: 60px !important;
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
   object-fit: contain;
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 8px;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.3rem;
+  margin-top: 5px;
   margin-bottom: 10px;
 }
 
