@@ -31,7 +31,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  message.textContent = "Success! You’ve joined Moonbean Café Rewards.";
+  message.textContent = "Success! You’ve joined Frictionless Café Rewards.";
   message.style.color = "green";
 
   form.reset();
