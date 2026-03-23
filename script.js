@@ -1,110 +1,60 @@
-const form = document.getElementById("rewardsForm");
-const phoneInput = document.getElementById("phone");
-const message = document.getElementById("message");
-const barcodeSection = document.getElementById("barcodeSection");
-const memberIdText = document.getElementById("memberIdText");
+const form = document.getElementById("form");
+const phone = document.getElementById("phone");
+const output = document.getElementById("output");
+const memberIdText = document.getElementById("memberId");
+const barcodeBox = document.getElementById("barcodeBox");
 
-function generateMemberId(phone) {
-  return `FC-${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6)}`;
+function getMemberId(num) {
+  return "FC-" + num;
 }
 
-phoneInput.addEventListener("input", () => {
-  let value = phoneInput.value.replace(/\D/g, "");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  if (value.length > 10) {
-    value = value.slice(0, 10);
-  }
+  let num = phone.value.replace(/\D/g, "");
 
-  if (value.length > 6) {
-    phoneInput.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
-  } else if (value.length > 3) {
-    phoneInput.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-  } else if (value.length > 0) {
-    phoneInput.value = `(${value}`;
-  } else {
-    phoneInput.value = "";
-  }
-});
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const cleanedPhone = phoneInput.value.replace(/\D/g, "");
-
-  if (!/^\d{10}$/.test(cleanedPhone)) {
-    message.innerHTML = "Please enter a valid 10-digit phone number.";
-    message.style.color = "red";
-    barcodeSection.classList.add("hidden");
+  if (num.length !== 10) {
+    output.innerHTML = "Enter a valid 10-digit number";
     return;
   }
 
-  const storageKey = "frictionlessCafeMembers";
-  const members = JSON.parse(localStorage.getItem(storageKey)) || {};
+  let data = JSON.parse(localStorage.getItem("users")) || {};
 
-  if (!members[cleanedPhone]) {
-    members[cleanedPhone] = {
-      memberId: generateMemberId(cleanedPhone),
+  if (!data[num]) {
+    data[num] = {
+      id: getMemberId(num),
       visits: 1
     };
   }
 
-  const memberId = members[cleanedPhone].memberId;
-  const visits = members[cleanedPhone].visits || 1;
-  const goal = 10;
-  const remaining = Math.max(goal - visits, 0);
+  let visits = data[num].visits;
+  let id = data[num].id;
 
-  localStorage.setItem(storageKey, JSON.stringify(members));
+  let greeting =
+    visits === 1
+      ? "Welcome to Frictionless Cafe Rewards."
+      : "Welcome back to Frictionless Cafe Rewards.";
 
-  let greeting;
-  if (visits === 1) {
-    greeting = "Welcome to Frictionless Cafe Rewards.";
-  } else {
-    greeting = "Welcome back to Frictionless Cafe Rewards.";
-  }
+  output.innerHTML = `
+    <b>${greeting}</b><br><br>
+    Member ID: ${id}<br>
+    Visits: ${visits}/10
+  `;
 
-  if (visits >= goal) {
-    message.innerHTML = `
-      <span style="color: green; font-weight: bold;">
-        ${greeting}
-      </span>
+  if (visits >= 10) {
+    output.innerHTML += `
       <br><br>
-      <strong>Member ID:</strong> ${memberId}
-      <br>
-      <strong>Rewards Progress:</strong> ${visits}/${goal}
-      <br><br>
-      🎉 You’ve unlocked a free drink!
-      <br>
-      📱 A reward code has been sent to your phone number.
-      <br>
-      Please check your text messages and show it to your barista to redeem.
-    `;
-  } else {
-    message.innerHTML = `
-      <span style="color: green; font-weight: bold;">
-        ${greeting}
-      </span>
-      <br><br>
-      <strong>Member ID:</strong> ${memberId}
-      <br>
-      <strong>Rewards Progress:</strong> ${visits}/${goal}
-      <br>
-      ☕ Keep checking in to earn free rewards.
-      <br>
-      ${remaining} more visit${remaining === 1 ? "" : "s"} until your free drink.
+      🎉 Free drink unlocked!<br>
+      📱 Check your texts to redeem.
     `;
   }
 
-  message.style.color = "";
-  memberIdText.textContent = `Member ID: ${memberId}`;
-  barcodeSection.classList.remove("hidden");
+  localStorage.setItem("users", JSON.stringify(data));
 
-  JsBarcode("#memberBarcode", memberId, {
-    format: "CODE128",
-    displayValue: false,
-    width: 2,
-    height: 80,
-    margin: 10
-  });
+  memberIdText.innerText = id;
+  barcodeBox.classList.remove("hidden");
 
-  form.reset();
+  JsBarcode("#barcode", id);
+
+  phone.value = "";
 });
