@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moonbean Café Rewards</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Moonbean Café Rewards</h1>
+    <p>Scan. Enter your number. Earn rewards.</p>
+
+    <div class="card">
+      <h2>Join Our Rewards Program</h2>
+      <p>Enter your 10-digit phone number below.</p>
+
+      <form id="rewardsForm">
+        <input
+          type="tel"
+          id="phone"
+          placeholder="(555) 555-5555"
+          maxlength="14"
+          required
+        />
+        <button type="submit">Join Rewards</button>
+      </form>
+
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
